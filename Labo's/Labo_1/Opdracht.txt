@@ -4,7 +4,7 @@ In deze eerste opdracht zullen wij werken met een bestande dataset van FLUVIUS "
 - Het energieverbruik van elke van de meters is 5.9 GWh, 42.5 GWh en 6.2 GWh.
 - De lastprofiel gemeten door de meter XX41 behoort tot een installatie waar de activiteiten gebeuren voornamelijk tijdens de week
 - De meter met code XX41 heeft het grootste verbruik in Januari
-- De baseload gemeten met de meter XX41 is onder 200 kWh
+- De baseload gemeten met de meter XX41 is onder 50 kWh
 - In de lastprofiel gemeten door de meter XX59 is er een cyclus van 6 uren
 
 Afleveringsdatum: 4 oktober vóór 8u30
