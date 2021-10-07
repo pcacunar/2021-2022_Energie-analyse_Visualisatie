@@ -1,0 +1,8 @@
+Digitale meters in België kunnen meten via zowel de poort P1 als de poort S1. De informatie wordt met verschillende resoluties gesampled. 
+
+Tijdens deze opdracht zullen wij de invloed van de tijdsresolutie op de resultaten van de energie-analyse evalueren.
+
+1. Wat is de resolutie van elke dataset?
+2. Wat is het energie-verbruik gerapporteerd in elke dataset?
+3. Wat is het piekvermogen gerapporteerd in elke dataset?
+4. Hoeveel zou de prijs van de elektriciteitsfactuur schiellen voor beide datasets?

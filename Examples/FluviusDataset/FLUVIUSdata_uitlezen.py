@@ -16,7 +16,7 @@ for i in np.arange(0,96):
     
     
     
-data=pd.read_csv('AMR_REPORTING_EXPORT_depurated.csv',names=names,delimiter=';',index_col=False)
+data=pd.read_csv('FluviusDataset/AMR_REPORTING_EXPORT_depurated.csv',names=names,delimiter=';',index_col=False)
 
 
 
@@ -54,15 +54,27 @@ def transfoE(data,startDatum):
                 dataA.append(temp[j])
     dataA=np.array(dataA)
     datee=pd.date_range(start=startDatum,periods=dataA.size,freq='15T')
-    dataA=pd.DataFrame({'Date':datee,'Energie_kWh':dataA})
+    if data.kWx.unique()[0] =='KWH':
+        lab='Energie_kWh'
+        uni='kWh'
+    elif data.kWx.unique()[0]=='KWT':
+        lab='Vermogen_kW'
+        uni='kW'
+    elif data.kWx.unique()[0] == 'MTQ':
+        lab='Energie_Nm3'
+        uni='Nm3'
+    else:
+        lab='dummy'
+    dataA=pd.DataFrame({'Date':datee,lab:dataA})
     dataA=dataA.set_index('Date',drop=True)
-    dataA.Energie_kWh.plot(label='afname')
-    plt.ylabel('Energie verbruik per kwartier [kWh]')
+    dataA[lab].plot(label='afname')
+    plt.ylabel(lab+' per kwartier ['+uni+']')
     return dataA
 
 # Elektriciteit
-metID='SUB(541448860012075359)' #'541448860012075359' '541449500001660041'
-tempo=dataAct_a[(dataAct_a['meterID']==metID) & (dataAct_a['kWx']=='MTQ')]
+meters=data.meterID.unique()
+metID=meters[0] #'541448860012075359' '541449500001660041'
+tempo=dataAct_a[(dataAct_a['meterID']==metID) & (dataAct_a['kWx']=='KWT')]
 
 tempo=tempo.fillna(0)
 
@@ -78,7 +90,7 @@ tempo['kwartier_25']=tempo.kwartier_6.astype(float)
 
 
 
-dataA=transfoE(tempo,tempo.From.iloc[0])
+dataA41=transfoE(tempo,tempo.From.iloc[0])
 dataA.to_csv('ActieveAfname_ID'+metID+'.csv')
 
 dataA.Energie_kWh.sum()
