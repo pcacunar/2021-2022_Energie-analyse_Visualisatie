@@ -30,4 +30,4 @@ plt.ylabel('vermogen')
 
 dataMaster=dataMaster.drop(['year','month','day','hour'],axis=1)
 
-sn.pairplot(dataMaster,size=0.65)
+sn.pairplot(dataMaster,size=0.8)

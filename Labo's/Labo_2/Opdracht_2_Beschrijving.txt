@@ -1,0 +1,5 @@
+- Hoe is het belastingsprofiel per dag doorheen het jaar?
+- Wat is het gemiddelde verbruiksprofiel per uur en de afwijking?
+- Hoe is de belastingsprofiel van het gebouw t.o.v. de nationale gemiddelde? De oppervlakte van het gebouw is 1800 m2
+- Bepaal de duurcurve voor zowel verbruik als productie
+- Hoeveel is de afname, injectie, eigenverbruik, zelf-consumptie en zelf-voorziening per maand?
