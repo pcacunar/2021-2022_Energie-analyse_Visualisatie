@@ -254,6 +254,7 @@ print('Het energieverbruik gemeten door de meter '+meters[1]+' is gelijk aan '+s
 print('Het energieverbruik gemeten door de meter '+meters[2]+' is gelijk aan '+str(dataAsub59['Energie_m3'].sum())+'m3 en werd gemeten tussen '+str(dataAsub59.index.min())+' en '+str(dataAsub59.index.max()))
 
 st.header('Energieverbruik per meter')
+
 st.markdown('Het energieverbruik gemeten door de meter '+meters[0]+' is gelijk aan '+str(dataA41['Vermogen_kW'].sum()*.25/1000)+'MWh en werd gemeten tussen '+str(dataA41.index.min())+' en '+str(dataA41.index.max()))
 
 st.markdown('Het energieverbruik gemeten door de meter '+meters[1]+' is gelijk aan '+str(dataA59['Energie_kWh'].sum()/1000)+'MWh en werd gemeten tussen '+str(dataA59.index.min())+' en '+str(dataA59.index.max()))
@@ -410,19 +411,44 @@ st.header('Facturatie')
 
 piekMei21=dataA41[(dataA41.index.month==5)]['Vermogen_kW'].max()
 print('Piekvermogen te beschouwen in de berekening is '+str(piekMei21)+'kW')
-verbMei21=dataA41[(dataA41.index.month==5)]['Vermogen_kW'].sum()*.25/1000
-print('Verbruik te beschouwen in de berekening is '+str(verbMei21)+'MWh')
+verbMei21=dataA41[(dataA41.index.month==5)]['Vermogen_kW'].sum()*.25
+print('Verbruik te beschouwen in de berekening is '+str(verbMei21)+'kWh')
+
+st.subheader('Elektriciteit')
 
 st.code('''
         
 piekMei21=dataA41[(dataA41.index.month==5)]['Vermogen_kW'].max()
 print('Piekvermogen te beschouwen in de berekening is '+str(piekMei21)+'kW')
-verbMei21=dataA41[(dataA41.index.month==5)]['Vermogen_kW'].sum()*.25/1000
-print('Verbruik te beschouwen in de berekening is '+str(verbMei21)+'MWh')
+verbMei21=dataA41[(dataA41.index.month==5)]['Vermogen_kW'].sum()*.25
+print('Verbruik te beschouwen in de berekening is '+str(verbMei21)+'kWh')
         ''')
         
-st.markdown('Piekvermogen te beschouwen in de berekening is '+str(piekMei21)+'kW \n'+'Verbruik te beschouwen in de berekening is '+str(verbMei21)+'MWh')
+st.markdown('Piekvermogen te beschouwen in de berekening is '+str(piekMei21)+'kW \n'+'Verbruik te beschouwen in de berekening is '+str(verbMei21)+'kWh')
+
+elekfac=pd.DataFrame({'Kosten':[verbMei21*.07089,verbMei21*(.019+.00017),verbMei21*.016227+3.2066084*piekMei21,(6.96+1.7717602*piekMei21+verbMei21*.005024)]},index=['Energie','Heffingen','Transport','Distributie'])
+st.write(elekfac.plot.pie(y='Kosten'))
+st.pyplot()
+
+# Gas
+
+piekGMei21=dataA59[(dataA59.index.month==5)]['Energie_kWh'].max()
+print('Piekvermogen van gas te beschouwen in de berekening is '+str(piekGMei21)+'kW')
+verbGMei21=dataA59[(dataA59.index.month==5)]['Energie_kWh'].sum()/1000
+print('Verbruik van gas te beschouwen in de berekening is '+str(verbGMei21)+'MWh')
 
 
 
+
+st.subheader('Gas')
+
+st.code('''
+piekGMei21=dataA59[(dataA59.index.month==5)]['Energie_kWh'].max()
+print('Piekvermogen van gas te beschouwen in de berekening is '+str(piekGMei21)+'kW')
+verbGMei21=dataA59[(dataA59.index.month==5)]['Energie_kWh'].sum()/1000
+print('Verbruik van gas te beschouwen in de berekening is '+str(verbGMei21)+'MWh')
+        
+        ''')
+
+st.markdown('Piekvermogen van gas te beschouwen in de berekening is '+str(piekGMei21)+'kW. '+'Verbruik van gas te beschouwen in de berekening is '+str(verbGMei21)+'MWh.')
 
