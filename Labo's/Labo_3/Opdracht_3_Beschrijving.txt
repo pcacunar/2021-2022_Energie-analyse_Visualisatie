@@ -14,6 +14,7 @@ Bepaal voor elke gebouw:
 	Voor gebouwen met hernieuwbare energiebronnen
 		Mismatch en profielanalyse daarvan
 		Zc en Zv
+	Hoeveel meer HEB en/of opslag energie zou nodig zijn om de zelf-voorziening van 100% te realiseren?
 Analyse, conclusie en energieplan
 		
 	
