@@ -1,0 +1,19 @@
+Maak een inventaris van de gebouwen in de Campus Kortrijk Weide met:
+	Oppervlakte
+	Functie van gebouw
+	Schatting van personen per dag
+	Aanwezigheid van energie assets
+	Metering en submetering
+Bepaal voor elke gebouw:
+	Genormaliseerde verbruik (MWh/m2/jaar)
+	Analyse van verbruiksprofiel a.d.h.v.
+		Duurcurve
+		Kansdichtheid verdeling
+		Fourier transformatie
+	Uren en dagen van de week met hoogste en laagste verbruik
+	Voor gebouwen met hernieuwbare energiebronnen
+		Mismatch en profielanalyse daarvan
+		Zc en Zv
+Analyse, conclusie en energieplan
+		
+	
