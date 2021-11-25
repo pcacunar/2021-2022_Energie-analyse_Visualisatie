@@ -24,15 +24,16 @@ names=['From','To','meterID','seq','Bx','23','E12-E17','kWx','A_C_I','Plaats']
 for i in np.arange(0,96):
     names.append('kwartier_'+str(i))
       
-    
-data=pd.read_csv('AMR_REPORTING_EXPORT_depurated.csv',names=names,delimiter=';',index_col=False)
+
+filename='AMR_REPORTING_EXPORT_29okt21_verwerkt.csv'    
+data=pd.read_csv(filename,names=names,delimiter=';',index_col=False)
 data.From=pd.to_datetime(data['From'],format='%d%m%Y %H:%M')
 data=data.sort_values('From')
 
-data['kwartier_6']=data.kwartier_6.astype(float)
-data['kwartier_18']=data.kwartier_6.astype(float)
-data['kwartier_21']=data.kwartier_6.astype(float)
-data['kwartier_25']=data.kwartier_6.astype(float)
+# data['kwartier_6']=data.kwartier_6.astype(float)
+# data['kwartier_18']=data.kwartier_6.astype(float)
+# data['kwartier_21']=data.kwartier_6.astype(float)
+# data['kwartier_25']=data.kwartier_6.astype(float)
 
 inter=data.A_C_I.unique()
 
@@ -85,6 +86,20 @@ def transfoE(data,startDatum):
         dataA=np.array(dataA)
         lab='Energie_kWh'
         uni='kWh'
+        datee=pd.date_range(start=startDatum,periods=dataA.size,freq='1H')
+        dataA=pd.DataFrame({'Date':datee,lab:dataA})
+        dataA=dataA.set_index('Date',drop=True)
+        
+    elif data.kWx.unique()[0] =='KVR':
+        dataA=[]
+        for i in np.arange(0,data.iloc[:,0].size):
+            temp=data.iloc[i,10:34].transpose().values
+            for j in np.arange(0,temp.size):
+                if not(pd.isna(temp[j])):
+                    dataA.append(temp[j])
+        dataA=np.array(dataA)
+        lab='Vermogen_kVAr'
+        uni='kVAr'
         datee=pd.date_range(start=startDatum,periods=dataA.size,freq='1H')
         dataA=pd.DataFrame({'Date':datee,lab:dataA})
         dataA=dataA.set_index('Date',drop=True)
@@ -220,14 +235,23 @@ plt.legend()
         ''')
 
 meters=data.meterID.unique()
+meting=data.A_C_I.unique()
 def datameter(meter):
-    tempo=dataAct_a[(dataAct_a['meterID']==meter)] # & (dataAct_a['kWx']=='KWT')
-    dataA=transfoE(tempo,tempo.From.iloc[0])
-    return dataA
+    tempoAct=dataAct_a[(dataAct_a['meterID']==meter)] # & (dataAct_a['kWx']=='KWT')
+    dataA=transfoE(tempoAct,tempoAct.From.iloc[0])
+    tempoInd=dataInd_a[(dataInd_a['meterID']==meter)] # & (dataAct_a['kWx']=='KWT')
+    dataI=transfoE(tempoInd,tempoInd.From.iloc[0])
+    tempoCap=dataCap_a[(dataCap_a['meterID']==meter)] # & (dataAct_a['kWx']=='KWT')
+    dataC=transfoE(tempoCap,tempoCap.From.iloc[0])
+    return dataA,dataI,dataC
 
-dataA41=datameter(meters[0])
-dataA59=datameter(meters[1])
-dataAsub59=datameter(meters[2])
+dataAct,dataInd,dataCap=datameter(meters[0])
+
+dataAct.to_csv('Activeafname_29okt.csv')
+dataInd.to_csv('Inductieveafname_29okt.csv')
+dataCap.to_csv('Capacitieveafname_29okt.csv')
+
+
 plt.legend()
 
 
